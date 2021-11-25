@@ -1,0 +1,5 @@
+commands used
+git status (-to check)
+git add -A (to add all files)
+git commit -m "<commit text>" (for adding all files)
+git push origin master (to push to master)
