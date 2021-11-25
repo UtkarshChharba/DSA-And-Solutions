@@ -31,13 +31,48 @@ using namespace std;
 
 
 
+struct comp{
+    bool operator()(pair<int,int>a,pair<int,int>b){
+        return a.second>b.second;
+    }
+};
+
+
+
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+priority_queue<pair<int,int>,vector<pair<int,int> >,comp> pq;
+pq.push(mp(1,2));
+pq.push(mp(1,3));
+pq.push(mp(1,4));
+pq.push(mp(1,5));
+pq.push(mp(1,6));
+pq.push(mp(1,7));
+while(!pq.empty()){
+    cout<<pq.top().second<<endl;
+    pq.pop();
 }
+
+
+
+
 return 0;
 }
 //.............................................................................................//
+/*
+WE MUST USE CUSTOM COMPAROTS FOR DATA TYPE THAT PRIORITY QUEUES CANT COMPARE
+FOR EG A CLASS CANT BE COMPARED ONLY ON THE BASIS OF OBJECT IT SHOULD BE DECIDED BY WHICH OBEJCT VALUE WE SHOULD COMPARE
+FOR EG PAIR HAVE 2 VALUE WE CAN EITHER USE FIRST OR SECOND SO NEED TO USE CUSTOM COMAPARTOR
+USE STRUCT
+FOR PAIR SECOND COMPARISION AND IS DEFAULT SYNTAX FOR OTHER DATATYPE ALSO
+WE ARE JUST OVERLOADING THE COMP FUNCTION
+
+struct comp{
+    bool operator()(pair<int,int>a,pair<int,int>b){
+        return a.second>b.second;
+    }
+};
+
+
+*/

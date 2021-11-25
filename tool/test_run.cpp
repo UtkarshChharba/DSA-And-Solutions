@@ -1,102 +1,173 @@
-    Binary_Tree<int>*root;
+#include <iostream>
+#include <queue>
+using namespace std;
+
+template <typename T>
+class BinaryTreeNode {
     public:
-    BST(){
-        root=NULL;
+    T data;
+    BinaryTreeNode *left;
+    BinaryTreeNode *right;
+
+    BinaryTreeNode(T data){
+        this->data = data;
+        left = right = NULL;
     }
-    ~BST(){
-        delete root;
+
+    ~BinaryTreeNode(){
+        delete left;
+        delete right;
     }
-    void deltedata(int data){
-        deletedata(data,root);
+};
+class completeBT
+{
+private:
+    BinaryTreeNode<int> *root;
+    queue<BinaryTreeNode<int> *> q;
+
+public:
+    completeBT()
+    {
+        root = NULL;
     }
-    Binary_Tree<int>* insert(int data){
-        root=insert(root,data);
+
+private:
+    BinaryTreeNode<int> *insertHelper(BinaryTreeNode<int> *node, int data)
+    {
+        BinaryTreeNode<int> *newNode = new BinaryTreeNode<int>(data);
+        if (node == NULL)
+        {
+            q.push(newNode);
+            return newNode;
+        }
+        else
+        {
+            for (int i = 0; i < q.size(); i++)
+            {
+
+                BinaryTreeNode<int> *front = q.front();
+
+                if (!front->left)
+                {
+                    front->left = newNode;
+                    q.push(newNode);
+                    break;
+                }
+                else if (!front->right)
+                {
+                    front->right = newNode;
+                    q.push(newNode);
+                }
+                else
+                    q.pop();
+            }
+        }
+        return node;
     }
-    private:
-    Binary_Tree<int>* deletedata(int data,Binary_Tree<int>*root){
-        if(!root){
+BinaryTreeNode<int>* delete_helper(BinaryTreeNode<int>*root,int data){
+    if(!root){
+        return NULL;
+    }
+    if(root->data==data){
+        if(!(root->left) && !(root->right)){
+            delete root;
             return NULL;
         }
-        if(data>root->data){
-             root->right=deletedata(data,root->right);
+        if(!root->left){
+            BinaryTreeNode<int>*right=root->right;
+            root->right=NULL;
+            delete root;
+            return right;
         }
-        if(data<root->data){
-            root->left=delete(data,root->right);
-        }
-        else{
-            if(root->left==NULL And root->right==NULL){
-                delete root;
-                return NULL;
-            }
-            if(root->left==NULL){
-                Binary_Tree<int>*temp=root->right;
-                root->right=NULL;
-                delete root;
-                return temp;
-            }
-            if(root->right==NULL){
-                Binary_Tree<int>*temp=root->left;
-                root->left=NULL;
-                delete root;
-                return temp;
-            }
-            else{
-                Binary_Tree<int>*min_node=root->right;
-                while(min_node->left!=NULL){
-                    min_node=min_node->left;
-                }
-                int rightmin=min_node->data;
-                root->data=rightmin;
-               root->right=deletedata(rightmin,root->right);
-                return root;
-            }
-        }
-
-          
-    }
-
-    int minimum(Binary_Tree<int>*root){
-        if(!root){
-            return INT_MAX;
-        }
-        return min3(root->data,minimum(root->left),minimum(root->right));
-    }
-    int maximum(Binary_Tree<int>*root){
-        if(!root){
-            return INT_MIN;
-        }
-        return max3(root->data,maximum(root->right),maximum(root->left));
-    }
-    bool has_data(int data,Binary_Tree<int>*root){
-        if(!root){
-            return false;
-        }
-        if(root->data==data){
-            return true;
-        }
-
-        else if(has_data(data,root->left)){
-            return true;
-        }
-        else if(has_data(data,root->right)){
-            return true;
-        }
-    }
-    Binary_Tree<int>* insert(Binary_Tree<int>*root,int data){
-        if(!root){
-            root=new Binary_Tree<int>(data);
-            return root;
-        }
-        if(root->data<=data){
-            root->right=insert(root->right,data);
-            return root;
+        if(!root->right){
+            BinaryTreeNode<int>*left=root->left;
+            root->left=NULL;
+            delete root;
+            return left;
         }
         else{
-            root->left=insert(root->left,data);
-            return root;
+        queue<BinaryTreeNode<int>*> pending_nodes;
+        pending_nodes.push(root);
+        BinaryTreeNode<int>*front=pending_nodes.front();
+        while(pending_nodes.size()){
+            front=pending_nodes.front();
+            pending_nodes.pop();
+            if(front->left){
+                pending_nodes.push(front->left);
+            }
+            if(front->right){
+                pending_nodes.push(front->right);
+            }
+        }
+        root->data=front->data;
+        root->left=delete_helper(root->left,root->data);
+        root->right=delete_helper(root->right,root->data);
+        return root;
+    }
+    }
+    root->left=delete_helper(root->left,data);
+    root->right=delete_helper(root->right,data);
+    return root;
+}  
+void levelOrderPrint(BinaryTreeNode<int> *root)
+{
+    queue<BinaryTreeNode<int> *> pendingNodes;
+    cout << root->data << endl;
+    pendingNodes.push(root);
+    pendingNodes.push(NULL);
+    while (!pendingNodes.empty())
+    {
+
+        // last null hoga toh yeh karenge taaki extra line add na ho
+        if (pendingNodes.size() == 1 && pendingNodes.front() == NULL)
+            break;
+
+        // use null as a check to end a level
+        if (pendingNodes.front() == NULL)
+        {
+            pendingNodes.push(NULL);
+            cout << endl;
+            pendingNodes.pop();
+        }
+
+        BinaryTreeNode<int> *front = pendingNodes.front();
+        pendingNodes.pop();
+
+        if (front->left)
+        {
+            pendingNodes.push(front->left);
+            cout << front->left->data << " ";
+        }
+        if (front->right)
+        {
+            pendingNodes.push(front->right);
+            cout << front->right->data << " ";
         }
     }
-    public:
-    bool has_data(int data){
-        return has_data(data,root);
-    }
+}
+
+public:
+void insert(int data)
+{
+    root = insertHelper(root, data);
+}
+void Delete(int data)
+{
+    root = delete_helper(root, data);
+}
+void print()
+{
+    levelOrderPrint(root);
+}
+};
+
+int main()
+{
+    completeBT b;
+    b.insert(1);
+    b.insert(2);
+    b.insert(3);
+    b.insert(4);
+    b.insert(5);
+    b.print();
+}

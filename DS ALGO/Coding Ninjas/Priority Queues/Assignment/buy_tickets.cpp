@@ -31,12 +31,46 @@ using namespace std;
 
 
 
+
+
+
+
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+int n;cin>>n;
+vi v(n);
+queue<int> q;
+priority_queue<int> pq;
+int my_priority=0;
+loop(i,0,n){
+    cin>>v[i];
+    q.push(v[i]);
+    pq.push(v[i]);
+}
+int i;cin>>i;
+my_priority=v[i];
+int time=0;
+while(!q.empty() And !pq.empty()){
+    while(q.front()!=pq.top()){
+        if(!i){
+            i=q.size()-1;
+        }
+        else{
+            i--;
+        }
+        int a=q.front();
+        q.pop();
+        q.push(a);
+    }
+    time++;
+    if(!i){
+        cout<<time<<endl;
+        break;
+    }
+    q.pop();
+    pq.pop();
+    i--;
 }
 return 0;
 }

@@ -29,15 +29,36 @@ using namespace std;
 #define FIO ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
-
-
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+int n;cin>>n;
+vi v(n);
+vi a(n);
+loop(i,0,n){
+    cin>>v[i];
 }
+sort(all(v));
+loop(i,1,n){
+    a[i]=v[i]-v[i-1];
+}
+int max=0;
+int start=0;
+int idx=0;
+loop(i,0,n){
+    start=i;
+    int top=0;
+    while(a[i]==1){
+        top++;
+        i++;
+    }
+    if(top>max){
+        idx=start-1;
+        max=top;
+    }
+}
+cout<<v[idx]<<" "<<v[idx+max]<<endl;;
+
 return 0;
 }
 //.............................................................................................//

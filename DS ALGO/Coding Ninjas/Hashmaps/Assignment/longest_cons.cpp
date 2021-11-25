@@ -31,13 +31,34 @@ using namespace std;
 
 
 
-//.............................................................................................//
+//...................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+int n;cin>>n;
+vi v;
+map<int,int> m;
+loop(i,0,n){
+    int a;
+    v.pb(a);
+    cin>>a;
+    m[a]++;
 }
+int max=0;
+int value=v[0];//storing the starting value and max length of subarray
+loop(i,0,v.size()){
+    int a=v[i];
+    int k=0;
+    a=v[i];
+    while(m[a]){//running a loop that just checks that m[a] exists and increment value k that is current length
+        k++;
+        a++;
+    }
+    if(k>max){//if k greater than the max length then update starting and length for array
+        max=k;
+        value=v[i];
+    }
+}
+cout<<value<<" "<<value+max-1<<endl;
 return 0;
 }
-//.............................................................................................//
+//..................................................................................//

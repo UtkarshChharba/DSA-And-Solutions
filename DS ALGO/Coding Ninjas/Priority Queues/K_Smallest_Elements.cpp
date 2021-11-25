@@ -31,13 +31,39 @@ using namespace std;
 
 
 
+
+
+
+
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+int n;cin>>n;
+vi v(n);
+loop(i,0,n){
+    cin>>v[i];
 }
+int k;cin>>k;
+priority_queue<int> pq;
+loop(i,0,k){
+    pq.push(v[i]);
+}
+loop(i,k,n){
+    if(pq.top()>v[i]){
+        pq.pop();
+        pq.push(v[i]);
+    }
+}
+while(!pq.empty()){
+    cout<<pq.top()<<endl;
+    pq.pop();
+}
+
 return 0;
 }
 //.............................................................................................//
+/*
+BASIC METHOD IS THAT 
+PUSHING INTIALLLY K ELEMENTS IN THE QUEUE THEN JUST CHECKING THAT EVERY TIME
+THE TOP SHOULD BE LESS THEN THE WHOLE ARRAY THAT IS
+FROM THE GROUP OF MINIMUM ITS MAXIMUM SHOULD BE LESS THAN THE WHOLE ARRAY*/

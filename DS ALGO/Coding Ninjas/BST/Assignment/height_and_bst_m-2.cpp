@@ -18,7 +18,7 @@ using namespace std;
 #define mp make_pair
 #include <map>
 #define infinity                        999999999999999999
-#define all(v)                          (v).begin(),(v).end()
+#define all(v)                          v.begin(),v.end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define ff first
 #define ss second
@@ -30,79 +30,22 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 #include "Binary_Tree_class.h"
 
-class node{
-    public:
-    int data;
-    node* next;
-    node(int data){
-        this->data=data;
-        next=NULL;
-    }
 
+class bi{
+    bool is_bst;
+    int max_height;
+    bi(){
+        is_bst=1;
+        max_height=0;
+    }
 };
-template<typename T>
-void PrintTree(Binary_Tree<T>* root){ 
+bi bst_and_height(Binary_Tree<int>*root){
     if(!root){
-        return;
+        bi p;
+        p.is_bst=1;
+        return p;
     }
-    cout<<root->data<<":";
-    if(root->left){
-        cout<<"L "<<root->left->data<<" ";
-    }
-    if(root->right){
-        cout<<"R "<<root->right->data<<" ";
-    }
-    cout<<endl;
-    PrintTree(root->left);
-    PrintTree(root->right);
-    return;
-
-}
-
-void linked_list_maker(Binary_Tree<int>*root,vector<node*> &v){
-    node*head=NULL;
-    node*tail=NULL;
-    queue<Binary_Tree<int>*> pending_nodes;
-    pending_nodes.push(root);
-    pending_nodes.push(NULL);
-    while(pending_nodes.size()){
-        Binary_Tree<int>*front=pending_nodes.front();
-        pending_nodes.pop();
-        if(!front){
-            tail->next=NULL;
-            tail=tail->next;
-            v.pb(head);
-            head=NULL;
-            if(pending_nodes.size()){
-                pending_nodes.push(NULL);
-            }
-        }
-        else{
-            if(!head){
-                head=new node(front->data);
-                tail=head;
-            }
-            else{
-                tail->next=new node(front->data);
-                tail=tail->next;
-                            }
-            if(front->left){
-                pending_nodes.push(front->left);
-            }
-            if(front->right){
-                pending_nodes.push(front->right);
-            }
-        }
-    }
-}
-
-void print_linked_list(node*head){
-    while(head){
-        cout<<head->data<<" ";
-        head=head->next;
-    }
-    cout<<endl;
-    return;
+    if(left-)
 }
 Binary_Tree<int>* takeinput_levelwise(){
     int a;
@@ -117,7 +60,7 @@ Binary_Tree<int>* takeinput_levelwise(){
     while(pending_queues.size()){
         Binary_Tree<int>*front=pending_queues.front();
         pending_queues.pop();
-        cout<<"Input Data Of Left"<<endl;
+        cout<<"Input Data Of Left Of "<<front->data<<endl;
         int a;
         cin>>a;
         if(a==-1){
@@ -127,7 +70,7 @@ Binary_Tree<int>* takeinput_levelwise(){
             front->left=new Binary_Tree<int>(a);
             pending_queues.push(front->left);
         }
-        cout<<"Input Data Of Right"<<endl;
+        cout<<"Input Data Of Right Of "<<front->data<<endl;
         cin>>a;
         if(a==-1){
             front->right=NULL;
@@ -142,17 +85,44 @@ Binary_Tree<int>* takeinput_levelwise(){
     }
     return root;
 }
+void print_tree_levelwise(Binary_Tree<int>*root){
+        if(!root){
+            return;
+        }
+        queue<Binary_Tree<int>*> pending_node;
+        pending_node.push(root);
+        pending_node.push(NULL);
+        cout<<root->data<<endl;
+        while(pending_node.size()){
+            Binary_Tree<int>*front=pending_node.front();
+            pending_node.pop();
+            if(!front){
+                cout<<endl;
+                if(pending_node.size()){
+                    pending_node.push(NULL);
+                }
+            }
+            else{
+            if(front->left){
+                cout<<front->left->data<<" ";
+                pending_node.push(front->left);
+            }
+            if(front->right){
+                cout<<front->right->data<<" ";
+                pending_node.push(front->right);
+            }
+        }
+        }
+}
 
 //.............................................................................................//
 int32_t main(){
 FIO
+//1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1 
 Binary_Tree<int>*root=takeinput_levelwise();
-vector<node*> v;
-linked_list_maker(root,v);
-cout<<v.size()<<endl;
-loop(i,0,v.size()){
-    print_linked_list(v[i]);
-}
+quad q=bst_height(root);
+cout<<q.max_height<<endl;
 return 0;
+
 }
 //.............................................................................................//

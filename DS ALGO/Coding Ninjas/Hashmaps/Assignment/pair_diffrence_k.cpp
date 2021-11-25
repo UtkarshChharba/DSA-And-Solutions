@@ -29,15 +29,27 @@ using namespace std;
 #define FIO ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
-
-
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+int n;cin>>n;
+vi v(n);
+map<int,int> m;
+loop(i,0,n){
+    cin>>v[i];
+    m[v[i]]++;
 }
+//basic methodlogy is check does m[v[i]]+k exist or not and there would be pairs like 
+//(a,a+k) or (a-k,a) but either are same
+int k;cin>>k;
+int count=0;
+loop(i,0,n){
+    if(m[v[i]+k]){
+                m[v[i]]--;
+        count+=m[v[i]+k];
+    }
+}
+cout<<count<<endl;
 return 0;
 }
 //.............................................................................................//

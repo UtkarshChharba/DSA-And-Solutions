@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 #define int long long
 #define pi (3.141592653589)
@@ -29,15 +30,29 @@ using namespace std;
 #define FIO ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
-
-
 //.............................................................................................//
 int32_t main(){
 FIO
-w(t){
-
-
+unordered_map<int,int> m1,m2,in;
+int n1;cin>>n1;
+vi v1(n1);
+loop(i,0,n1){
+    cin>>v1[i]; 
+    m1[v1[i]]++;
+    in[v1[i]]++; 
 }
+int n2;cin>>n2;
+vi v2(n2);
+loop(i,0,n2){
+cin>>v2[i];
+    m2[v2[i]]++;
+    in[v2[i]]++;
+    if(in[v2[i]]>m2[v2[i]]){
+        cout<<v2[i]<<" ";
+    }
+}
+cout<<endl;
+
 return 0;
 }
 //.............................................................................................//
