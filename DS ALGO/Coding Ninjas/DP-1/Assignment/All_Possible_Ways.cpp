@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 using namespace std;
+#define tl(v,size) for(int i=0;i<size;i++){cout<<v[i]<<' ';} cout<<endl
 #define int long long
 #define pi (3.141592653589)
 #define loop(i,a,b) for(int i=a;i<b;i++)
@@ -29,55 +30,57 @@ using namespace std;
 #define FIO ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
-
-
-int max_loot(vi v,int i=0){
-    if(i>v.size()-1){
+int recursion(int a,int b){
+    if(!a And !b){
+        return 1;
+    }
+    if((!a And b) Or (a And !b)){
         return 0;
     }
-    int loot=0;
-    loot=max(max_loot(v,i+2)+v[i],max_loot(v,i+1));
-    return loot;
+    int h=1;
+    int c=a-h*h;
+    int count=0;
+    while(c>=0){
+        h++;
+        count+=recursion(c,b-1);
+        if(count>0){
+            cout<<c<<" "<<b-1<<endl;
+        }
+        c=a-h*h;
+    }
+    return count;
 }
-
-
-
 //.............................................................................................//
 int32_t main(){
 FIO
-int n;cin>>n;
-vi v(n+1);
-loop(i,1,n+1){
-    cin>>v[i];
+int a,b;cin>>a>>b;
+int*dp=new int[a+1];
+loop(i,0,a+1){
+    dp[i]=0;
 }
-if(n==1){
-    cout<<v[1]<<endl;
-}
-else{
-    int*dp=new int[n+1];
-    dp[0]=0;
-    dp[1]=v[1];
-    dp[2]=v[2];
-    loop(i,3,n+1){
-        dp[i]=max(dp[i-2]+v[i],dp[i-1]);
+dp[0]=1;
+dp[1]=1;
+loop(i,2,a+1){
+    int c=i;
+    int h=0;
+    while(c>=0){
+        int d=i-c;
+        if(dp[d] And dp[c] And (c!=d)){
+            dp[i]+=dp[c]*dp[d];
+        }
+        if(c==0){
+            dp[i]+=2;
+        }
+        h++;
+        c=i-pow(h,b);
     }
-    cout<<dp[n]<<endl;
+    dp[i]=dp[i]/2;
 }
-
+cout<<dp[a]<<endl;
+loop(i,0,10){
+    cout<<dp[i]<<" ";
+}
+cout<<endl;
 return 0;
 }
 //.............................................................................................//
-
-/*
-WE ARE MAINTAING A DP ARRAY 
-AGAR HUM LOOP LGA RHE HAI TOH WE CAN SAY YAHA TOH WOH PEHLE WALE GHAR SE CHORI KERKE AYE
-YA WOH IS GHAR SE CHORI KRKE AND AB WALE GHAR SE JO CHORI KI WOH RAKHE
-SO AGAR SUPPOSE KARO 6=[10,2,30,20,3,50]
-DP ARRAY IS =[10,2] ITNA TOH FIX HAI
-DP[I] KO SIRF DP[I-2]+V[I] KA OPTION HAI
-YA TOH WOH IS GHAR MEIN CHORI NA KARE AND DP[I-1] MEIN KHUSH RHE 
-DP[I-2] MEIN HAMESH USKI MAX CHORI HOGI
-
-
-RECURSION MEIN OVERALL LOGIC SAME HAI
-                        */

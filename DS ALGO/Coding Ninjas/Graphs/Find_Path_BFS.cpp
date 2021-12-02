@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 using namespace std;
+#define tl(v,size) for(int i=0;i<size;i++){cout<<v[i]<<' ';} cout<<endl
 #define int long long
 #define pi (3.141592653589)
 #define loop(i,a,b) for(int i=a;i<b;i++)
@@ -30,54 +31,63 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
 
-
-int max_loot(vi v,int i=0){
-    if(i>v.size()-1){
-        return 0;
+void DFS(int**edge,int n,int st,int fi){
+    bool*visited=new bool[n];
+    loop(i,0,n){
+        visited[i]=0;
     }
-    int loot=0;
-    loot=max(max_loot(v,i+2)+v[i],max_loot(v,i+1));
-    return loot;
+    queue<int> q;
+    visited[st]=1;
+    map<int,int> m;
+    q.push(st);
+    while(!q.empty()){
+        int front=q.front();
+        q.pop();
+        if(front==fi){
+            cout<<fi<<" ";
+            while(front!=st){
+                cout<<m[front]<<" ";
+                front=m[front];
+            }
+            return;
+        }
+        loop(i,0,n){
+            if(edge[front][i] And !visited[i]){
+                m[i]=front;
+                visited[i]=1;
+                q.push(i);
+            }
+        }
+
+    }
+    return;
 }
-
-
 
 //.............................................................................................//
 int32_t main(){
 FIO
-int n;cin>>n;
-vi v(n+1);
-loop(i,1,n+1){
-    cin>>v[i];
-}
-if(n==1){
-    cout<<v[1]<<endl;
-}
-else{
-    int*dp=new int[n+1];
-    dp[0]=0;
-    dp[1]=v[1];
-    dp[2]=v[2];
-    loop(i,3,n+1){
-        dp[i]=max(dp[i-2]+v[i],dp[i-1]);
+int n;
+int e;
+cin>>n>>e;
+int**edge=new int*[n];
+loop(i,0,n){
+    edge[i]=new int[n];
+    loop(j,0,n){
+        edge[i][j]=0;
     }
-    cout<<dp[n]<<endl;
 }
-
+loop(i,0,e){
+    int f,s;
+    cin>>f>>s;
+    edge[f][s]=1;
+    edge[s][f]=1;
+}
+bool*visited=new bool[n];
+loop(i,0,n){
+    visited[i]=0;
+}
+int st,fi;cin>>st>>fi;
+DFS(edge,n,st,fi);
 return 0;
 }
 //.............................................................................................//
-
-/*
-WE ARE MAINTAING A DP ARRAY 
-AGAR HUM LOOP LGA RHE HAI TOH WE CAN SAY YAHA TOH WOH PEHLE WALE GHAR SE CHORI KERKE AYE
-YA WOH IS GHAR SE CHORI KRKE AND AB WALE GHAR SE JO CHORI KI WOH RAKHE
-SO AGAR SUPPOSE KARO 6=[10,2,30,20,3,50]
-DP ARRAY IS =[10,2] ITNA TOH FIX HAI
-DP[I] KO SIRF DP[I-2]+V[I] KA OPTION HAI
-YA TOH WOH IS GHAR MEIN CHORI NA KARE AND DP[I-1] MEIN KHUSH RHE 
-DP[I-2] MEIN HAMESH USKI MAX CHORI HOGI
-
-
-RECURSION MEIN OVERALL LOGIC SAME HAI
-                        */

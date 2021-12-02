@@ -31,14 +31,6 @@ using namespace std;
 
 
 
-int max_loot(vi v,int i=0){
-    if(i>v.size()-1){
-        return 0;
-    }
-    int loot=0;
-    loot=max(max_loot(v,i+2)+v[i],max_loot(v,i+1));
-    return loot;
-}
 
 
 
@@ -46,38 +38,29 @@ int max_loot(vi v,int i=0){
 int32_t main(){
 FIO
 int n;cin>>n;
+int*dp=new int[n+1];
 vi v(n+1);
 loop(i,1,n+1){
     cin>>v[i];
 }
-if(n==1){
-    cout<<v[1]<<endl;
-}
-else{
-    int*dp=new int[n+1];
-    dp[0]=0;
-    dp[1]=v[1];
-    dp[2]=v[2];
-    loop(i,3,n+1){
-        dp[i]=max(dp[i-2]+v[i],dp[i-1]);
+dp[1]=1;
+int count=1;
+loop(i,2,n+1){
+    if(v[i]>v[i-1]){
+        count++;
+        if(count>dp[i-1]){
+            dp[i]=count;
+        }
+        else{
+            dp[i]=dp[i-1];
+        }
     }
-    cout<<dp[n]<<endl;
+    else{
+        count=1;
+        dp[i]=dp[i-1];
+    }
 }
-
+cout<<dp[n]<<endl;
 return 0;
 }
 //.............................................................................................//
-
-/*
-WE ARE MAINTAING A DP ARRAY 
-AGAR HUM LOOP LGA RHE HAI TOH WE CAN SAY YAHA TOH WOH PEHLE WALE GHAR SE CHORI KERKE AYE
-YA WOH IS GHAR SE CHORI KRKE AND AB WALE GHAR SE JO CHORI KI WOH RAKHE
-SO AGAR SUPPOSE KARO 6=[10,2,30,20,3,50]
-DP ARRAY IS =[10,2] ITNA TOH FIX HAI
-DP[I] KO SIRF DP[I-2]+V[I] KA OPTION HAI
-YA TOH WOH IS GHAR MEIN CHORI NA KARE AND DP[I-1] MEIN KHUSH RHE 
-DP[I-2] MEIN HAMESH USKI MAX CHORI HOGI
-
-
-RECURSION MEIN OVERALL LOGIC SAME HAI
-                        */

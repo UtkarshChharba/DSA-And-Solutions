@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 #include <vector>
+#include <unordered_map>
 using namespace std;
+#define tl(v,size) for(int i=0;i<size;i++){cout<<v[i]<<' ';} cout<<endl
 #define int long long
 #define pi (3.141592653589)
 #define loop(i,a,b) for(int i=a;i<b;i++)
@@ -29,55 +31,47 @@ using namespace std;
 #define FIO ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
-
-
-int max_loot(vi v,int i=0){
-    if(i>v.size()-1){
+int recursion(vi v,int sum,int cur_sum=0,int index=1){
+    if(cur_sum>sum){
         return 0;
     }
-    int loot=0;
-    loot=max(max_loot(v,i+2)+v[i],max_loot(v,i+1));
-    return loot;
+    if(cur_sum==sum){
+        return 1;
+    }
+    int count=0;
+    loop(i,index,v.size()){
+        count+=recursion(v,sum,cur_sum+v[i],i);
+    }
+    return count;
 }
-
-
-
 //.............................................................................................//
 int32_t main(){
 FIO
 int n;cin>>n;
 vi v(n+1);
+unordered_map<int,int> m;
 loop(i,1,n+1){
     cin>>v[i];
+    m[v[i]]++;
+}
+int a;cin>>a;
+int*dp=new int[a+1];
+dp[0]=1;
+loop(i,1,v[1]){
+    dp[i]=0;
 }
 if(n==1){
-    cout<<v[1]<<endl;
+    cout<<1<<endl;
 }
 else{
-    int*dp=new int[n+1];
-    dp[0]=0;
-    dp[1]=v[1];
-    dp[2]=v[2];
-    loop(i,3,n+1){
-        dp[i]=max(dp[i-2]+v[i],dp[i-1]);
-    }
-    cout<<dp[n]<<endl;
+loop(i,v[1],v[2]){
+    dp[i]=1;
 }
+
+cout<<dp[a]%mod<<endl;
+}
+
 
 return 0;
 }
 //.............................................................................................//
-
-/*
-WE ARE MAINTAING A DP ARRAY 
-AGAR HUM LOOP LGA RHE HAI TOH WE CAN SAY YAHA TOH WOH PEHLE WALE GHAR SE CHORI KERKE AYE
-YA WOH IS GHAR SE CHORI KRKE AND AB WALE GHAR SE JO CHORI KI WOH RAKHE
-SO AGAR SUPPOSE KARO 6=[10,2,30,20,3,50]
-DP ARRAY IS =[10,2] ITNA TOH FIX HAI
-DP[I] KO SIRF DP[I-2]+V[I] KA OPTION HAI
-YA TOH WOH IS GHAR MEIN CHORI NA KARE AND DP[I-1] MEIN KHUSH RHE 
-DP[I-2] MEIN HAMESH USKI MAX CHORI HOGI
-
-
-RECURSION MEIN OVERALL LOGIC SAME HAI
-                        */
