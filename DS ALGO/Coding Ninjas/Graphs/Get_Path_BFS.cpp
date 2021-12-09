@@ -31,7 +31,7 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
 
-void DFS(int**edge,int n,int st,int fi){
+void BFS(int**edge,int n,int st,int fi){
     bool*visited=new bool[n];
     loop(i,0,n){
         visited[i]=0;
@@ -87,7 +87,7 @@ loop(i,0,n){
     visited[i]=0;
 }
 int st,fi;cin>>st>>fi;
-DFS(edge,n,st,fi);
+BFS(edge,n,st,fi);
 return 0;
 }
 //.............................................................................................//
