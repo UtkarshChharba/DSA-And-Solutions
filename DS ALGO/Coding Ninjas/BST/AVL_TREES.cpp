@@ -233,9 +233,9 @@ T1   x                          y    T3                    T1  T2 T3  T4
   
   
 RIGHT-RIGHT CASE:- WHEN HEIGHT DIFFRENCE IS DUE TO RIGHT DIFFRENCE 
- TOH WE ARE JUSR USING A LEFT SHIFT
+ TOH WE ARE JUSt USING A LEFT SHIFT
 
- z                                y
+   z                               y
  /  \                            /   \ 
 T1   y     Left Rotate(z)       z      x
     /  \   - - - - - - - ->    / \    / \
