@@ -33,62 +33,48 @@ using namespace std;
 
 
 
-class node{
-    public:
-    int data;
-    node*next;
-    node*pre;
-    node(int data){
-        this->data=data;
-        next=NULL;
-        pre=NULL;
-    }
-};
-class linked_list{
-    public:
-    node*head;
-    node*tail;
-    linked_list(){
-        head=NULL;
-        tail=NULL;
-    }
-    void take_input(){
-        int data;
-        cin>>data;
-        while(data!=-1){
-            if(!head){
-                head=new node(data);
-                tail=head;
-            }
-            else{
-                node*temp=new node(data);
-                temp->pre=tail;
-                tail->next=temp;
-                tail=temp;
-            }
-            cin>>data;
-        }
-    }
-    void print(){
-        print(head);
-    }
-    void print(node*head){
-        node*temp=head;
-        while(!temp){
-            cout<<temp->data<<" ";
-            temp=temp->next;
-        }
-        cout<<endl;
-    }
-};
 
 
+int pow2(int n){
+    int ans=1;
+    int start=2;
+    while(n){
+    if(n%2){
+    ans=ans*start;
+    n--;
+}
+    else{
+        start=start*start;
+        n=n/2;
+    }
+}
+    return ans;
+}
+
+
+
+
+bool isPrime(int n){
+    if(n==1) return false;
+    if(n==2) return true;
+    for(int i=2;i*i<=n;i++){
+    if(n%i==0)return false;
+}
+return true;
+}
 //.............................................................................................//
 int32_t main(){
 FIO
-linked_list l;
-l.take_input();
-l.print();
+w(t){
+int a,b,c;
+cin>>a>>b>>c;
+if( ((a+b)%2==0 And a+b>=2*c)Or ((a+c)%2==0 And a+c>=2*b) Or ((c+b)%2==0 And c+b>=2*b)){
+    cout<<"YES"<<endl;
+}
+else{
+    cout<<"NO"<<endl;
+}
+}
 return 0;
 }
 //.............................................................................................//

@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 using namespace std;
+#define tl(v,size) for(int i=0;i<size;i++){cout<<v[i]<<' ';} cout<<endl
 #define int long long
 #define pi (3.141592653589)
 #define loop(i,a,b) for(int i=a;i<b;i++)
@@ -30,43 +31,27 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
 
-
-
-
-
-int pow2(int n){
-    int ans=1;
-    int start=2;
-    while(n){
-    if(n%2){
-    ans=ans*start;
-    n--;
-}
-    else{
-        start=start*start;
-        n=n/2;
-    }
-}
-    return ans;
-}
-
-
-
-
-bool isPrime(int n){
-    if(n==1) return false;
-    if(n==2) return true;
-    for(int i=2;i*i<=n;i++){
-    if(n%i==0)return false;
-}
-return true;
-}
 //.............................................................................................//
 int32_t main(){
 FIO
 w(t){
+    int v,e;
+    cin>>v>>e;
+    int**edge=new int*[v];
+    loop(i,0,v){
+        edge[i]=new int[v];
 
-
+        loop(j,0,v){
+            edge[i][j]=0;
+        }
+    }
+    loop(i,0,v){
+        int f,s;
+        cin>>f>>s;
+        edge[f][s]=1;
+        edge[s][f]=1;
+    }
+    
 }
 return 0;
 }

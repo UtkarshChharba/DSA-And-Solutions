@@ -1,9 +1,0 @@
-threaded tree
-graphs algo
-master thm
-asomtotic 
-postfix infix
-sorting 
-introduction to data(theory)
-application of stacks
- 
