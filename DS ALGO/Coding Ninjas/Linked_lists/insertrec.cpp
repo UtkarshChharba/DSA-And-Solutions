@@ -46,7 +46,7 @@ node* insertrec(node* head,int i,int data){
         return head;
 
      }
-     insertrec(head->next,i-1,data);//recursive call
+     head->next=insertrec(head->next,i-1,data);//recursive call
      return head;
 
  }

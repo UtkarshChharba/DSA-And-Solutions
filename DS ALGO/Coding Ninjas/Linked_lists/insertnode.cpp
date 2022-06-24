@@ -45,6 +45,7 @@ node* insertnode(node*head,int i,int a){
     }
     while(temp And k<i-1){
         temp=temp->next;
+        k++;
     } 
     if(temp){
     newnode->next=temp->next;
