@@ -68,7 +68,7 @@ pair<int,int> diameter(Binary_Tree<int>*root){
     }
     pair<int,int> left=diameter(root->left);
     pair<int,int> right=diameter(root->right);
-    return mp(max(left.ff,right.ff)+1,max3(left.ff+right.ff,left.ss,right.ss));
+    return mp(max(left.ff,right.ff)+1,max3(left.ff+right.ff+1,left.ss,right.ss));
     
 }
 int height(Binary_Tree<int>*root){

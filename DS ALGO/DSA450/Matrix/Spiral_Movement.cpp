@@ -34,10 +34,32 @@ using namespace std;
 vector<int> spirallyTraverse(vector<vector<int> > matrix, int r, int c) 
     {
         vector<int> ans;
-        int row=0,col=0;
-        
-
-        
+        int srow=0,erow=r-1,scol=0,ecol=c-1;
+        int count=r*c;
+        while(count){
+           for(int i=scol;i<=ecol;i++){
+                ans.push_back(matrix[srow][i]);
+                count--;
+           }
+           for(int i=srow+1;i<=erow;i++){
+                ans.push_back(matrix[i][ecol]);
+                count--;
+           }
+           for(int i=ecol-1;i>=scol;i--){
+            ans.push_back(matrix[erow][i]);
+                count--;
+           }
+           for(int i=erow-1;i>srow;i--){
+            ans.push_back(matrix[i][scol]);
+                count--;
+           }
+           scol++;
+           srow++;
+           erow--;
+           ecol--;
+        }
+        return ans;
+  
     }
 
 

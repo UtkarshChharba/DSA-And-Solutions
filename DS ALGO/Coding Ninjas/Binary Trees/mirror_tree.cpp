@@ -107,7 +107,15 @@ Binary_Tree<int>* takeinput_levelwise(){
     }
     return root;
 }
-
+void mirror(Binary_Tree<int> *root){
+    if(!root){
+        return NULL;
+    }
+    mirror(root->left);
+    mirror(root->right);
+        swap(root->left,root->right);
+        return;
+}
 //.............................................................................................//
 int32_t main(){
 FIO

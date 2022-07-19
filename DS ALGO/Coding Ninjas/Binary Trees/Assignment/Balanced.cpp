@@ -49,17 +49,21 @@ void PrintTree(Binary_Tree<T>* root){
 }
 pair<bool,int> balanced(Binary_Tree<int>*root){
     if(!root){
-        return mp(1,0);
+        return {1,0};
     }
+    pair<bool,int> ans;
     pair<bool,int> left=balanced(root->left);
     pair<bool,int> right=balanced(root->right);
-    pair<bool,int> p(0,max(left.ss,right.ss)+1);
-    if(left.ss==right.ss){
-        p.ff=1;
+    ans.second=0;
+    ans.first=max(right.second,left.second)+1;
+    if(abs(right.second-left.second)<=1){
+        ans.first=right.first&&left.first;
     }
-    return p;
-}
+    return ans;
+    
 
+
+}
 Binary_Tree<int>* takeinput_levelwise(){
     int a;
     cout<<"Input The root data"<<endl;

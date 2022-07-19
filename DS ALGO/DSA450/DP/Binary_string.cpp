@@ -31,21 +31,21 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
 
-int prefixStrings(int N)
+int prefixStrings(int n)
 	{
-	    return helper(2*N,1);
+	    vector<int> dp(n+1);
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=2;    
+        for(int i=3;i<=n;i++){
+            for(int j=0;i<=i-1;j++){
+                dp[i]+=dp[j]*dp[i-j];
+            }
+        }
+        return dp[n];
+
 	}
-int helper(int N,int last){
-    if(!N){
-        return 1;
-    }
-    else if(last==0){
-        return helper(N-1,1);
-    }
-    else{
-        return helper(N-1,0)+helper(N-1,1);
-    }
-}
+
 //.............................................................................................//
 int32_t main(){
 FIO

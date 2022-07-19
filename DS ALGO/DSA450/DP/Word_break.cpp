@@ -17,7 +17,6 @@ using namespace std;
 #define Or ||
 #define float double
 #define pb push_back
-#define mp make_pair
 #include <map>
 #define infinity                        999999999999999999
 #define all(v)                          (v).begin(),(v).end()
@@ -32,29 +31,34 @@ using namespace std;
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
 unordered_map<string,int> dp;
+unordered_map<string,bool> mp;
 int wordBreak(string a, vector<string> &b) {
+    for(int i=0;i<b.size();i++){
+        mp[b[i]]++;
+    }
     return helper(a,b,0,a.size()-1);
 }
 int helper(string a, vector<string> &b,int i,int j){
     if(i>j){
         return 0;
     }
+    if(i==j){
+        return 1;
+    }
     string key=to_string(i)+" "+to_string(j);
-    if(dp.find(key)!=dp.end()){
+    if(dp.count(key)){
         return dp[key];
     }
-    string word=a.substr(i,j-i+1);
-    for(int i=0;i<b.size();i++){
-        if(word==b[i]){
-            return dp[key]=1;
+    bool ty=0;
+    string ans="";
+    for(int k=i;k<=j-1;k++){
+        ans+=a[k];
+        if(mp.count(ans)){
+            ty=ty||helper(a,b,k+1,j);
         }
     }
-    bool ans=0;
-    for(int k=i;k<j;k++){
-        bool temp=helper(a,b,i,k)&&helper(a,b,k+1,j);
-        ans=ans||temp;
-    }   
-    return dp[key]=ans;
+
+    return dp[key]=ty;
 }
 //.............................................................................................//
 int32_t main(){
